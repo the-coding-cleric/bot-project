@@ -106,16 +106,3 @@ if __name__ == '__main__':
             submit_form(driver, "wpforms[submit]")
             driver.close()
             time.sleep(4)
-
-
-
-    text_question_element_class = "quantumWizTextinputPaperinputInput"
-    checkbox_question_element_class = "appsMaterialWizToggleRadiogroupOffRadio"
-    submit_element_class = '//*[@id="mG61Hd"]/div[2]/div/div[3]/div[1]/div/div/span/span'
-    color_index_dict = {"Blue": 0, "Pink": 1, "Black": 2, "White": 3, "Green": 4}
-
-    #url = "https://forms.gle/WY7E9N8wkiMtziTD9"
-    #driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-    # driver.get(url)
-
-    #answer_name_age(driver, df, element_class, user_id)
