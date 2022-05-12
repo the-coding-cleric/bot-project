@@ -1,0 +1,31 @@
+name: CI
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.10
+
+    - name: Build virtual environment
+      run: make build
+
+    - name: Test and Coverage
+      run: make coverage
+
+    - name: Package
+      run: make package
+
+    - name: Test Package Installation
+      run: pip install dist/*.whl
+
+    - name: Test Scripts
+      run: |
+        bot --help

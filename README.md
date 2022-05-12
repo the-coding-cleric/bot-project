@@ -1,3 +1,4 @@
+[![CI](https://github.com/charlielin1988/bot-project/actions/workflows/main.yml/badge.svg)](https://github.com/charlielin1988/bot-project/actions/workflows/main.yml)
 ## Bot Project
 
 ### _Description_

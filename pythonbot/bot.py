@@ -3,6 +3,8 @@ import csv
 import os
 import time
 import sys
+
+import argparse
 import faker
 import pandas as pd
 
@@ -12,17 +14,17 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-CSV_FILE_NAME = "submission_form_database.csv"
-sys.path.append(".")
+CSV_FILE_NAME = "bot/data/submission_form_database.csv"
 
 
-def generate_csv_data(fake_data_dict):
+def generate_csv_data(output_file, fake_data_dict):
     database = pd.DataFrame(fake_data_dict)
-    database.to_csv(CSV_FILE_NAME, index=False)
+    database.to_csv(output_file, index=False)
     database.head()
 
 
 def generate_fake_data(csv_entries):
+    f = faker.Faker()
     names = [f.name() for _ in range(csv_entries)]
     message = "This form is SHIT!!!!"
     first_names = []
@@ -80,29 +82,43 @@ def submit_form(web_driver, element_name):
     return web_driver
 
 
-if __name__ == '__main__':
-    f = faker.Faker()
-    csv_entries = 10
-    fake_data_dict = generate_fake_data(csv_entries)
-    generate_csv_data(fake_data_dict)
+def parse_args():
+    parser = argparse.ArgumentParser(description='Checks the DNS of a domain')
+    parser.add_argument('run')
 
-    element_name_dict = {"first_name": "wpforms[fields][0][first]",
-                         "last_name": "wpforms[fields][0][last]",
-                         "email": "wpforms[fields][1]",
-                         "message": "wpforms[fields][2]"}
+    args = parser.parse_args()
+    return args
 
-    csv_data = read_data_csv(CSV_FILE_NAME)
-    data_list = make_list_from_csv(csv_data)
 
-    url = "https://jeditest.wpengine.com/sample-page/"
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-    for data_dict in data_list:
-        for item in element_name_dict:
+def main():
+    args = parse_args()
+    if args.run:
+        path = os.path.abspath(os.getcwd())
+        output_file = os.path.join(path, CSV_FILE_NAME)
+        csv_entries = 2
+        fake_data_dict = generate_fake_data(csv_entries)
+        generate_csv_data(output_file, fake_data_dict)
+
+        element_name_dict = {"first_name": "wpforms[fields][0][first]",
+                             "last_name": "wpforms[fields][0][last]",
+                             "email": "wpforms[fields][1]",
+                             "message": "wpforms[fields][2]"}
+
+        csv_data = read_data_csv(output_file)
+        data_list = make_list_from_csv(csv_data)
+
+        url = "https://jeditest.wpengine.com/sample-page/"
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        for data_dict in data_list:
             driver.get(url)
             answer_form_element(driver, element_name_dict["first_name"], data_dict["first_name"])
             answer_form_element(driver, element_name_dict["last_name"], data_dict["last_name"])
             answer_form_element(driver, element_name_dict["email"], data_dict["email"])
             answer_form_element(driver, element_name_dict["message"], data_dict["message"])
             submit_form(driver, "wpforms[submit]")
-            driver.close()
             time.sleep(4)
+        driver.close()
+
+
+if __name__ == '__main__':
+    main()
