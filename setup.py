@@ -1,7 +1,8 @@
-from setuptools import setup
-import requirements
+#!/usr/bin/env python3
 from os import path
 
+import requirements
+from setuptools import setup
 
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:

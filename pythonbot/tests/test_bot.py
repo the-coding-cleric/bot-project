@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import mock
 import unittest
 
 from pythonbot import bot

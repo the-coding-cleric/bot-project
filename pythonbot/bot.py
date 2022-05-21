@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
+import argparse
 import csv
 import os
-import time
 import sys
+import time
 
-import argparse
 import faker
 import pandas as pd
-
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
-
 
 CSV_FILE_NAME = "bot/data/submission_form_database.csv"
 

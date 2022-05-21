@@ -7,28 +7,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.9
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
 
-    - name: Install pipenv
-      run: pip install pipenv
+      - name: Install pipenv
+        run: pip install pipenv
 
-    - name: Build virtual environment
-      run: make build
+      - name: Build virtual environment
+        run: make build
 
-    - name: Test and Coverage
-      run: make coverage
+      - name: Test and Coverage
+        run: make coverage
 
-    - name: Package
-      run: make package
+      - name: Package
+        run: make package
 
-    - name: Test Package Installation
-      run: pip install dist/*.whl
+      - name: Test Package Installation
+        run: pip install dist/*.whl
 
-    - name: Test Scripts
-      run: |
-        bot --help
+      - name: Test Scripts
+        run: |
+          bot --help
