@@ -15,16 +15,21 @@ from webdriver_manager.chrome import ChromeDriverManager
 CSV_FILE_NAME = "bot/data/submission_form_database.csv"
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description='Checks the DNS of a domain')
+    parser.add_argument('run')
+    args = parser.parse_args()
+    return args
+
+
 def generate_csv_data(output_file, fake_data_dict):
     database = pd.DataFrame(fake_data_dict)
     database.to_csv(output_file, index=False)
     database.head()
 
 
-def generate_fake_data(csv_entries):
-    f = faker.Faker()
+def generate_fake_data(f, message, csv_entries):
     names = [f.name() for _ in range(csv_entries)]
-    message = "This form is SHIT!!!!"
     first_names = []
     last_names = []
     emails = []
@@ -33,7 +38,7 @@ def generate_fake_data(csv_entries):
         split_name = name.split(' ')
         first_names.append(split_name[0])
         last_names.append(split_name[1])
-        emails.append('{}.{}@jeffistotallyawesome.space'.format(split_name[0], split_name[1]))
+        emails.append('{}.{}@domain.com'.format(split_name[0], split_name[1]))
         messages.append(message)
     return {"first_name": first_names, "last_name": last_names, "email": emails, "message": messages}
 
@@ -80,21 +85,15 @@ def submit_form(web_driver, element_name):
     return web_driver
 
 
-def parse_args():
-    parser = argparse.ArgumentParser(description='Checks the DNS of a domain')
-    parser.add_argument('run')
-
-    args = parser.parse_args()
-    return args
-
-
 def main():
     args = parse_args()
+    f = faker.Faker()
+    message = "This form is SHIT!!!!"
     if args.run:
         path = os.path.abspath(os.getcwd())
         output_file = os.path.join(path, CSV_FILE_NAME)
         csv_entries = 2
-        fake_data_dict = generate_fake_data(csv_entries)
+        fake_data_dict = generate_fake_data(f, message, csv_entries)
         generate_csv_data(output_file, fake_data_dict)
 
         element_name_dict = {"first_name": "wpforms[fields][0][first]",
