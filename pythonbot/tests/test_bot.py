@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import unittest
+from unittest.mock import patch
 
 from pythonbot import bot
 
@@ -15,7 +16,7 @@ class TestBot(unittest.TestCase):
                            {'first_name': 'Julia', 'last_name': 'Jimenez',
                             'email': 'Julia.Jimenez@domain.com', 'message': 'message'}]
 
-    @mock.patch('builtins.print')
+    @patch('builtins.print')
     def test_make_list_from_csv(self, mock_print):
         actual = bot.make_list_from_csv(self.input_file_data)
         print(actual)
