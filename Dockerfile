@@ -31,7 +31,7 @@ RUN apt-get update && apt-get install -y \
   python3-pip \
   python3-venv \
   sudo \
-  && apt clean
+  && apt-get clean
 
 RUN apt-get purge -y --auto-remove && \
     rm -rf /var/lib/apt/lists/*

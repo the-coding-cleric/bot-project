@@ -8,6 +8,9 @@ packages = [
     { include = "pythonbot" },
 ]
 
+[tool.poetry.scripts]
+bot = "pythonbot.bot:main"
+
 [tool.poetry.dependencies]
 python = "^3.8"
 argparse = "^1.4.0"
