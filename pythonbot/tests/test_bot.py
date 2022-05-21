@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
 import mock
 
@@ -27,7 +27,7 @@ Amanda,Moore,Amanda.Moore@domain.com,message
 Julia,Jimenez,Julia.Jimenez@domain.com,message
 """
 
-    @mock.patch('argparse.ArgumentParser.parse_args')
+    @patch('argparse.ArgumentParser.parse_args')
     def test_parse_args(self, mock_args):
         mock_args.return_value = argparse.Namespace(run='run')
         expected = {'run': 'run'}
@@ -36,7 +36,7 @@ Julia,Jimenez,Julia.Jimenez@domain.com,message
         self.assertEqual(actual_dict, expected)
 
     def test_generate_fake_data(self):
-        f_mock = mock.MagicMock()
+        f_mock = MagicMock()
         f_mock.name.side_effect = ['Kim Douglas', 'Chelsea Skinner']
         actual = bot.generate_fake_data(f_mock, 'message', 2)
         self.assertEqual(actual, self.fake_data_dict)

@@ -12,11 +12,11 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
-CSV_FILE_NAME = "bot/data/submission_form_database.csv"
+CSV_FILE_NAME = "data/submission_form_database.csv"
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Checks the DNS of a domain')
+    parser = argparse.ArgumentParser(description='')
     parser.add_argument('run')
     args = parser.parse_args()
     return args

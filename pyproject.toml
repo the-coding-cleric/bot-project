@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "bot-project"
+version = "1.0.1"
+description = "Script to fill out website forms with fake data"
+authors = ["jediknight112, charlielin1988"]
+license = "License :: OSI Approved :: MIT License"
+packages = [
+    { include = "pythonbot" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+argparse = "^1.4.0"
+Faker = "^13.11.1"
+pandas = "^1.4.2"
+selenium = "^4.1.5"
+webdriver-manager = "^3.5.4"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.2"
+flake8 = "^4.0.1"
+pytest-cov = "^3.0.0"
+mock = "^4.0.3"
+
+[tool.pytest.ini_options]
+testpaths = ["pythonbot/"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

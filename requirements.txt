@@ -1,5 +1,0 @@
-faker
-pandas
-selenium
-setuptools
-webdriver_manager
